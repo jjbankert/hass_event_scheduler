@@ -1,7 +1,7 @@
 """Event Scheduler Integration"""
-import json
-from typing import Any
 from datetime import datetime, timezone
+from typing import Any
+
 from homeassistant.core import Config, HomeAssistant, ServiceCall
 
 DOMAIN = "event_scheduler"
@@ -11,7 +11,7 @@ def setup(hass: HomeAssistant, config: Config):
     def upsert_scheduled_event(call: ServiceCall):
         params: dict[str, Any] = dict(call.data)
         event_id = f"{DOMAIN}.{params.pop('id')}"
-        hass.states.set(event_id, params.pop('trigger_time'), params)
+        hass.states.set(event_id, params.pop("trigger_time"), params)
 
     def remove_scheduled_event(call: ServiceCall):
         event_id = f"{DOMAIN}.{call.data['id']}"
@@ -27,9 +27,7 @@ def setup(hass: HomeAssistant, config: Config):
                 hass.states.remove(event.entity_id)
 
                 # fire event
-                hass.bus.fire(event.attributes['channel'], event.attributes['data'])
-
-
+                hass.bus.fire(event.attributes["channel"], event.attributes["data"])
 
     hass.services.register(DOMAIN, "upsert_scheduled_event", upsert_scheduled_event)
     hass.services.register(DOMAIN, "remove_scheduled_event", remove_scheduled_event)
