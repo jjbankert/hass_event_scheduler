@@ -1,0 +1,9 @@
+upsert_scheduled_event:
+  name: Upsert Scheduled Event
+  description: Add or Update an event to be sent at a specific time.
+remove_scheduled_event:
+  name: Remove Scheduled Event
+  description: Remove a scheduled event.
+fire_events:
+  name: Fire Events
+  description: Fire the events with trigger time at or before the current time.
