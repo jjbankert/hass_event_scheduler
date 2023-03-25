@@ -1,9 +1,33 @@
-upsert_scheduled_event:
+upsert_event:
   name: Upsert Scheduled Event
-  description: Add or Update an event to be sent at a specific time.
-remove_scheduled_event:
+  description: Add or Update an event to be fired at a specific time.
+  fields:
+    id:
+      description: The 'id' for the scheduled event. The scheduled event will be stored as 'event_scheduler.{{id}}''. If a scheduled event with the same id already exists, it will be overwritten. The id can be reused if a previously scheduled event with the same id has already been fired.
+      example: calendar_reminder_exercise
+      required: true
+    time:
+      description: "The ISO-8601 formatted date and time of when the event should be fired. The 'now()'' function in Home Assistant templates is formatted correctly. It's easy to schedule the event in one hour like so: {{ now() + timedelta(hours=1)}}"
+      example: '"{{ now() + timedelta(hours=1)}}"'
+      required: true
+    type:
+      description: The event type, e.g. 'reminder' or the system event 'call_service'.
+      example: reminder
+      required: true
+    data:
+      description: The event data. Unlike the other parameters, this should be an object/dict/map.
+      example: |
+        title: Exercise Reminder
+        content: Get ready to sweat and smile, it's exercise time!
+      required: true
+remove_event:
   name: Remove Scheduled Event
   description: Remove a scheduled event.
+  fields:
+    id:
+      description: "The 'id' of the scheduled event that should be removed, i.e. this service will remove 'event_scheduler.{{id}}'"
+      example: calendar_reminder_exercise
+      required: true
 fire_events:
   name: Fire Events
-  description: Fire the events with trigger time at or before the current time.
+  description: Fire the events that were scheduled at or before the current time. Events that are about to be fired, are first removed. This is done so that any triggered automations can immediately schedule a new event with the same id, without worrying about race conditions.
