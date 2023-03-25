@@ -1,11 +1,14 @@
 {
     "domain": "event_scheduler",
     "name": "Event Scheduler",
-    "codeowners": [],
+    "version": "0.1.0",
+    "codeowners": [
+        "@jjbankert"
+    ],
     "dependencies": [],
-    "documentation": "https://www.example.com",
+    "documentation": "https://github.com/jjbankert/hass_event_scheduler",
+    "issue_tracker": "https://github.com/jjbankert/hass_event_scheduler/issues",
     "integration_type": "service",
-    "iot_class": "cloud_polling",
-    "requirements": [],
-    "version": "0.1.0"
+    "iot_class": "calculated",
+    "requirements": []
 }
